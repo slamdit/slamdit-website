@@ -214,15 +214,11 @@
             overflow: hidden;
             border: 3px solid rgba(232, 168, 124, 0.3);
         }
-        .photo-frame .placeholder-icon {
-            font-size: 5rem;
-            margin-bottom: 1rem;
-        }
-        .photo-frame .placeholder-text {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            text-align: center;
-            padding: 0 1.5rem;
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center top;
         }
         .photo-badge {
             position: absolute;
@@ -572,8 +568,7 @@
         </div>
         <div class="hero-photo">
             <div class="photo-frame">
-                <div class="placeholder-icon">&#128248;</div>
-                <p class="placeholder-text">Sally's photo goes here!<br><small style="opacity:0.6;">(swap this with your favorite pic)</small></p>
+                <img src="sally-photo.jpg" alt="Sally Lamoureux — founder of slamdit">
                 <div class="photo-badge">Est. 2024 &#127793;</div>
             </div>
         </div>
