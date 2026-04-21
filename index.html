@@ -1,860 +1,535 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>slamdit — Sally Lamoureux | Builder, Dreamer, Problem Solver</title>
-    <meta name="description" content="Sally Lamoureux helps small businesses and side-hustlers work smarter with AI-powered automation. Because life's too short to sit behind a desk all day.">
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,700&family=DM+Serif+Display&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --warm-cream: #FFF8F0;
-            --soft-peach: #FFE8D6;
-            --golden: #E8A87C;
-            --deep-plum: #4A2040;
-            --rich-purple: #6B3A6B;
-            --forest: #2D5F2D;
-            --sage: #87A878;
-            --sky: #7EC8C8;
-            --sunset: #F4845F;
-            --text-dark: #2C1810;
-            --text-warm: #5C3D2E;
-            --text-light: #8B7355;
-            --white: #FFFFFF;
-            --light-bg: #FDF6EE;
-        }
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>slamdit — Technology that gives people their time back</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Instrument+Serif:ital@0;1&family=VT323&display=swap" rel="stylesheet"/>
+<style>
+/* === THEMES === */
+:root,[data-theme="midnight"]{
+  --bg-primary:#0b0b0d;--bg-secondary:#111114;--bg-tertiary:#1a1a1f;--bg-card:#14141a;
+  --text-primary:#f3f1ea;--text-secondary:#a8a69e;--text-muted:#6b6960;
+  --accent:#f06f3a;--accent-hover:#e85a22;--accent-dim:rgba(240,111,58,.15);
+  --rule:rgba(243,241,234,.1);--rule-strong:rgba(243,241,234,.2);
+}
+[data-theme="synth-dusk"]{
+  --bg-primary:#0e0b1e;--bg-secondary:#130f28;--bg-tertiary:#1a1535;--bg-card:#151030;
+  --text-primary:#f0e8ff;--text-secondary:#a89cc8;--text-muted:#6b5f8a;
+  --accent:#e84690;--accent-hover:#d63580;--accent-dim:rgba(232,70,144,.15);
+  --rule:rgba(240,232,255,.1);--rule-strong:rgba(240,232,255,.2);
+}
+[data-theme="prairie-dawn"]{
+  --bg-primary:#faf5ec;--bg-secondary:#f2ead8;--bg-tertiary:#e8dfc8;--bg-card:#f5efe2;
+  --text-primary:#1a1710;--text-secondary:#5a5445;--text-muted:#8a826e;
+  --accent:#c33c22;--accent-hover:#a8311a;--accent-dim:rgba(195,60,34,.12);
+  --rule:rgba(26,23,16,.12);--rule-strong:rgba(26,23,16,.2);
+}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{
+  font-family:'Space Grotesk',sans-serif;
+  background:var(--bg-primary);color:var(--text-primary);
+  line-height:1.6;transition:background .4s,color .4s;
+}
+::selection{background:var(--accent);color:var(--bg-primary)}
+a{color:inherit;text-decoration:none}
 
-        body {
-            font-family: 'DM Sans', 'Inter', sans-serif;
-            color: var(--text-dark);
-            background: var(--warm-cream);
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;background:var(--bg-primary);border-bottom:1px solid var(--rule)}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:56px}
+.nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;letter-spacing:-.02em}
+.nav-links{display:flex;gap:32px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;text-transform:uppercase}
+.nav-links a{color:var(--text-secondary);transition:color .2s}
+.nav-links a:hover{color:var(--text-primary)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-est{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted)}
+.theme-dots{display:flex;gap:6px}
+.theme-dot{width:10px;height:10px;border-radius:50%;border:1px solid var(--rule-strong);cursor:pointer;transition:transform .2s,box-shadow .2s}
+.theme-dot:hover{transform:scale(1.3)}
+.theme-dot.active{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-dim)}
 
-        /* ========== NAV ========== */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            background: rgba(255, 248, 240, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(232, 168, 124, 0.2);
-            padding: 0.8rem 0;
-        }
-        .nav-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            font-family: 'DM Serif Display', serif;
-            font-size: 1.6rem;
-            color: var(--deep-plum);
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
-        .logo span { color: #FF8C00; }
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            align-items: center;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-warm);
-            font-size: 0.95rem;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        .nav-links a:hover { color: var(--deep-plum); }
-        .nav-cta {
-            background: var(--deep-plum) !important;
-            color: var(--white) !important;
-            padding: 0.5rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.9rem !important;
-        }
-        .nav-cta:hover { background: var(--rich-purple) !important; }
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: var(--deep-plum);
-            cursor: pointer;
-        }
+/* BROADCAST STRIP */
+.broadcast{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);background:var(--bg-secondary);border-bottom:1px solid var(--rule);display:flex;align-items:center;justify-content:center;gap:24px;padding:6px 24px;margin-top:56px}
+.rec-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#e33;animation:blink 1.2s ease-in-out infinite;vertical-align:middle;margin:0 4px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
 
-        /* ========== HERO ========== */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 8rem 2rem 4rem;
-            position: relative;
-            overflow: hidden;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -20%;
-            right: -10%;
-            width: 600px;
-            height: 600px;
-            background: radial-gradient(circle, rgba(232, 168, 124, 0.15) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -10%;
-            left: -10%;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(126, 200, 200, 0.1) 0%, transparent 70%);
-            border-radius: 50%;
-        }
-        .hero-inner {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 4rem;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-        .hero-text h1 {
-            font-family: 'DM Serif Display', serif;
-            font-size: 3.5rem;
-            color: var(--deep-plum);
-            line-height: 1.15;
-            margin-bottom: 0.5rem;
-        }
-        .hero-text h1 .wave { display: inline-block; animation: wave 2.5s infinite; transform-origin: 70% 70%; }
-        @keyframes wave {
-            0%, 60%, 100% { transform: rotate(0deg); }
-            10% { transform: rotate(14deg); }
-            20% { transform: rotate(-8deg); }
-            30% { transform: rotate(14deg); }
-            40% { transform: rotate(-4deg); }
-            50% { transform: rotate(10deg); }
-        }
-        .hero-tagline {
-            font-size: 1.35rem;
-            color: var(--text-warm);
-            margin-bottom: 1.5rem;
-            font-weight: 400;
-            line-height: 1.6;
-        }
-        .hero-tagline em {
-            color: var(--deep-plum);
-            font-style: normal;
-            font-weight: 600;
-        }
-        .hero-bio {
-            font-size: 1.05rem;
-            color: var(--text-light);
-            margin-bottom: 2rem;
-            max-width: 560px;
-        }
-        .hero-btns {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.85rem 2rem;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1rem;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-        .btn-primary {
-            background: var(--deep-plum);
-            color: var(--white);
-        }
-        .btn-primary:hover { background: var(--rich-purple); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(74, 32, 64, 0.3); }
-        .btn-outline {
-            background: transparent;
-            color: var(--deep-plum);
-            border: 2px solid var(--deep-plum);
-        }
-        .btn-outline:hover { background: var(--deep-plum); color: var(--white); transform: translateY(-2px); }
+/* HERO */
+.hero{padding:80px 24px 60px;max-width:1200px;margin:0 auto;text-align:center}
+.wordmark{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(100px,22vw,360px);line-height:.85;letter-spacing:-.03em;position:relative}
+.wordmark::before,.wordmark::after{content:'slamdit';position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
+.wordmark::before{color:rgba(255,50,50,.06);transform:translate(-2px,1px)}
+.wordmark::after{color:rgba(50,50,255,.06);transform:translate(2px,-1px)}
+.hero-headline{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(24px,4vw,42px);line-height:1.2;max-width:700px;margin:40px auto 32px;letter-spacing:-.01em}
+.emphasis{font-family:'Instrument Serif',serif;font-style:italic}
+.hero-sub{max-width:640px;margin:0 auto;color:var(--text-secondary);font-size:16px;line-height:1.7}
+.hero-sub p+p{margin-top:20px;color:var(--text-muted);font-size:14px}
 
-        /* Photo placeholder */
-        .hero-photo {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .photo-frame {
-            width: 340px;
-            height: 400px;
-            border-radius: 30px;
-            background: linear-gradient(135deg, var(--soft-peach), rgba(126, 200, 200, 0.3));
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            border: 3px solid rgba(232, 168, 124, 0.3);
-        }
-        .photo-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center top;
-        }
-        .photo-badge {
-            position: absolute;
-            bottom: -10px;
-            right: -10px;
-            background: var(--golden);
-            color: var(--white);
-            padding: 0.6rem 1.2rem;
-            border-radius: 20px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            box-shadow: 0 4px 15px rgba(232, 168, 124, 0.4);
-        }
+/* TICKER */
+.ticker-wrap{overflow:hidden;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);background:var(--bg-secondary)}
+.ticker-track{display:flex;width:max-content;animation:scroll-ticker 45s linear infinite}
+@keyframes scroll-ticker{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.ticker-item{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);padding:10px 32px;white-space:nowrap;flex-shrink:0}
+.ticker-sep{color:var(--accent);margin-right:16px}
 
-        /* ========== SECTION STYLES ========== */
-        section { padding: 5rem 2rem; }
-        .section-inner { max-width: 1100px; margin: 0 auto; }
-        .section-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: var(--golden);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        .section-title {
-            font-family: 'DM Serif Display', serif;
-            font-size: 2.5rem;
-            color: var(--deep-plum);
-            margin-bottom: 1rem;
-        }
-        .section-subtitle {
-            font-size: 1.1rem;
-            color: var(--text-light);
-            max-width: 650px;
-            margin-bottom: 3rem;
-        }
-        .alt-bg { background: var(--light-bg); }
+/* SECTION LABEL */
+.section-label{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);display:flex;align-items:center;gap:12px;margin-bottom:40px}
+.section-label::before{content:'';display:block;width:24px;height:1px;background:var(--text-muted)}
 
-        /* ========== MY STORY ========== */
-        .story-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: start;
-        }
-        .story-text p {
-            margin-bottom: 1.2rem;
-            font-size: 1.05rem;
-            color: var(--text-warm);
-        }
-        .story-text .highlight {
-            background: linear-gradient(to right, rgba(232, 168, 124, 0.2), transparent);
-            padding: 1.2rem 1.5rem;
-            border-left: 4px solid var(--golden);
-            border-radius: 0 12px 12px 0;
-            margin: 1.5rem 0;
-            font-size: 1.1rem;
-            color: var(--deep-plum);
-            font-weight: 500;
-            line-height: 1.6;
-        }
-        .story-values {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-        .story-values h3 {
-            font-family: 'DM Serif Display', serif;
-            color: var(--deep-plum);
-            font-size: 1.3rem;
-            margin-bottom: 1.5rem;
-        }
-        .value-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            margin-bottom: 1.2rem;
-        }
-        .value-icon {
-            font-size: 1.5rem;
-            flex-shrink: 0;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--soft-peach);
-            border-radius: 12px;
-        }
-        .value-item h4 {
-            font-size: 0.95rem;
-            color: var(--deep-plum);
-            margin-bottom: 0.2rem;
-        }
-        .value-item p {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            margin: 0;
-        }
+/* GRID */
+.grid-border{display:grid;gap:1px;background:var(--rule)}
+.grid-border>*{background:var(--bg-primary)}
+.grid-4{grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.grid-3{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.grid-contact{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 
-        /* ========== WHAT I DO ========== */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 1.5rem;
-        }
-        .service-card {
-            background: var(--white);
-            border-radius: 20px;
-            padding: 2rem;
-            border: 1px solid rgba(232, 168, 124, 0.15);
-            transition: all 0.3s;
-        }
-        .service-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 35px rgba(74, 32, 64, 0.08);
-            border-color: var(--golden);
-        }
-        .service-icon {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-            display: inline-block;
-        }
-        .service-card h3 {
-            font-size: 1.15rem;
-            color: var(--deep-plum);
-            margin-bottom: 0.6rem;
-        }
-        .service-card p {
-            font-size: 0.95rem;
-            color: var(--text-light);
-        }
+/* SECTION WRAP */
+.section{padding:60px 24px;max-width:1200px;margin:0 auto}
 
-        /* ========== PROJECTS ========== */
-        .projects-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-        .project-card {
-            background: var(--white);
-            border-radius: 20px;
-            overflow: hidden;
-            border: 1px solid rgba(232, 168, 124, 0.15);
-            transition: all 0.3s;
-        }
-        .project-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 35px rgba(74, 32, 64, 0.08);
-        }
-        .project-header {
-            padding: 1.5rem 1.5rem 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-        .project-emoji { font-size: 2.5rem; }
-        .project-status {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 700;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-        }
-        .status-active { background: rgba(135, 168, 120, 0.15); color: var(--forest); }
-        .status-building { background: rgba(126, 200, 200, 0.2); color: #2a8a8a; }
-        .status-early { background: rgba(232, 168, 124, 0.2); color: #c47a4a; }
-        .project-body { padding: 1rem 1.5rem 1.5rem; }
-        .project-card h3 {
-            font-size: 1.2rem;
-            color: var(--deep-plum);
-            margin-bottom: 0.3rem;
-        }
-        .project-card .project-desc {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-        }
-        .project-tech {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-bottom: 1rem;
-        }
-        .tech-tag {
-            font-size: 0.72rem;
-            background: var(--light-bg);
-            color: var(--text-warm);
-            padding: 0.25rem 0.7rem;
-            border-radius: 20px;
-            font-weight: 500;
-        }
-        .project-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
-            font-size: 0.9rem;
-            color: var(--deep-plum);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .project-link:hover { color: var(--golden); }
+/* PILLAR CARD */
+.pillar-card{padding:32px 28px}
+.pillar-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;margin-bottom:8px}
+.pillar-apps{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;color:var(--accent);text-transform:uppercase;margin-bottom:12px}
+.pillar-desc{color:var(--text-secondary);font-size:14px;line-height:1.6}
 
-        /* ========== TECH STACK ========== */
-        .stack-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            justify-content: center;
-        }
-        .stack-item {
-            background: var(--white);
-            padding: 0.7rem 1.4rem;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--text-warm);
-            border: 1px solid rgba(232, 168, 124, 0.2);
-            transition: all 0.3s;
-        }
-        .stack-item:hover {
-            border-color: var(--golden);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(74, 32, 64, 0.08);
-        }
+/* PRINCIPLES */
+.principle{padding:28px 28px 28px 0;border-top:1px solid var(--rule)}
+.principle-num{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--text-muted);text-transform:uppercase;margin-bottom:12px}
+.principle-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-bottom:8px}
+.principle-desc{color:var(--text-secondary);font-size:14px;line-height:1.6}
 
-        /* ========== ENCOURAGEMENT / CTA ========== */
-        .encouragement {
-            background: linear-gradient(135deg, var(--deep-plum), var(--rich-purple));
-            color: var(--white);
-            text-align: center;
-            padding: 5rem 2rem;
-            position: relative;
-            overflow: hidden;
-        }
-        .encouragement::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-        .encouragement .section-inner { position: relative; z-index: 1; }
-        .encouragement h2 {
-            font-family: 'DM Serif Display', serif;
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: var(--white);
-        }
-        .encouragement p {
-            font-size: 1.15rem;
-            max-width: 650px;
-            margin: 0 auto 2rem;
-            opacity: 0.9;
-            line-height: 1.7;
-        }
-        .btn-light {
-            background: var(--white);
-            color: var(--deep-plum);
-        }
-        .btn-light:hover { background: var(--soft-peach); transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.2); }
-        .btn-ghost {
-            background: transparent;
-            color: var(--white);
-            border: 2px solid rgba(255,255,255,0.4);
-        }
-        .btn-ghost:hover { border-color: var(--white); background: rgba(255,255,255,0.1); transform: translateY(-2px); }
+/* PRODUCTS */
+.product-card{padding:28px 24px;display:flex;flex-direction:column;height:100%}
+.product-card.featured{padding:48px 40px}
+.product-cat{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;color:var(--text-muted);text-transform:uppercase;margin-bottom:8px}
+.product-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;margin-bottom:4px}
+.product-card.featured .product-name{font-size:32px}
+.product-tagline{font-family:'Instrument Serif',serif;font-style:italic;font-size:15px;color:var(--accent);margin-bottom:16px}
+.product-card.featured .product-tagline{font-size:18px}
+.product-desc{color:var(--text-secondary);font-size:13px;line-height:1.6;margin-bottom:20px;flex:1}
+.product-card.featured .product-desc{font-size:15px}
+.product-bottom{display:flex;align-items:center;justify-content:space-between}
+.badge{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--rule-strong);display:inline-block}
+.badge-live{border-color:#22c55e;color:#22c55e}
+.badge-dev{border-color:var(--accent);color:var(--accent)}
+.badge-concept{border-color:var(--text-muted);color:var(--text-muted)}
+.visit-link{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em;color:var(--accent);transition:opacity .2s}
+.visit-link:hover{opacity:.7}
 
-        /* ========== FOOTER ========== */
-        footer {
-            background: var(--text-dark);
-            color: rgba(255,255,255,0.7);
-            padding: 3rem 2rem;
-        }
-        .footer-inner {
-            max-width: 1100px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-        }
-        .footer-brand .logo { color: var(--white); }
-        .footer-brand p { font-size: 0.85rem; margin-top: 0.3rem; }
-        .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-        .footer-links a {
-            color: rgba(255,255,255,0.6);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-        .footer-links a:hover { color: var(--golden); }
+/* CRT SCANLINES */
+.crt{position:relative;overflow:hidden;border:1px solid var(--rule)}
+.crt::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.04) 2px,rgba(0,0,0,.04) 4px);pointer-events:none;z-index:1}
 
-        /* ========== RESPONSIVE ========== */
-        @media (max-width: 900px) {
-            .hero-inner { grid-template-columns: 1fr; text-align: center; }
-            .hero-text h1 { font-size: 2.5rem; }
-            .hero-bio { margin: 0 auto 2rem; }
-            .hero-btns { justify-content: center; }
-            .hero-photo { order: -1; }
-            .photo-frame { width: 250px; height: 300px; }
-            .story-content { grid-template-columns: 1fr; }
-            .services-grid { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
-            .mobile-menu-btn { display: block; }
-            .section-title { font-size: 2rem; }
-            .encouragement h2 { font-size: 2rem; }
-        }
-    </style>
+/* ABOUT */
+.about-head{max-width:640px;margin-bottom:48px}
+.about-h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:28px;line-height:1.3;margin-bottom:20px}
+.about-p{color:var(--text-secondary);font-size:15px;line-height:1.7;margin-bottom:16px}
+.founder-link{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--accent);transition:opacity .2s}
+.founder-link:hover{opacity:.7}
+
+/* VALUE CARD */
+.value-card{padding:40px 28px;position:relative;overflow:hidden}
+.watermark{font-family:'VT323',monospace;font-size:clamp(120px,18vw,260px);line-height:1;color:var(--accent);opacity:.06;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;user-select:none}
+.value-name{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:20px;margin-bottom:12px;position:relative;z-index:2}
+.value-desc{color:var(--text-secondary);font-size:14px;line-height:1.6;position:relative;z-index:2}
+
+/* CONTACT */
+.contact-h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(28px,5vw,48px);line-height:1.1;letter-spacing:-.02em;margin-bottom:48px}
+.contact-cell{padding:28px 24px;display:block;transition:background .2s}
+.contact-cell:hover{background:var(--bg-secondary)}
+.contact-label{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--text-muted);text-transform:uppercase;margin-bottom:8px}
+.contact-value{font-family:'Space Grotesk',sans-serif;font-size:15px;color:var(--accent)}
+
+/* FOOTER */
+.footer{border-top:1px solid var(--rule);padding:40px 24px;max-width:1200px;margin:0 auto}
+.footer-inner{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:32px;margin-bottom:32px}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;margin-bottom:4px}
+.footer-tag{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted)}
+.footer-links{display:flex;gap:24px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.04em}
+.footer-links a{color:var(--text-secondary);transition:color .2s}
+.footer-links a:hover{color:var(--accent)}
+.footer-copy{border-top:1px solid var(--rule);padding-top:20px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;color:var(--text-muted);text-transform:uppercase}
+
+/* ABOUT-ME PAGE */
+.aboutme{max-width:680px;margin:0 auto;padding:80px 24px 60px}
+.aboutme-h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(32px,5vw,48px);line-height:1.1;letter-spacing:-.02em;margin-bottom:12px}
+.aboutme-sub{font-family:'Instrument Serif',serif;font-style:italic;font-size:20px;color:var(--accent);margin-bottom:48px}
+.aboutme-body{color:var(--text-secondary);font-size:16px;line-height:1.8}
+.aboutme-body p+p{margin-top:20px}
+.drives-title{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:24px;margin:64px 0 32px}
+.drive-item{border-top:1px solid var(--rule);padding:20px 0}
+.drive-item h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin-bottom:6px}
+.drive-item p{color:var(--text-secondary);font-size:14px;line-height:1.6}
+.back-link{display:inline-block;margin-top:48px;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.04em;color:var(--accent)}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-est{display:none}
+  .grid-4{grid-template-columns:1fr}
+  .grid-3{grid-template-columns:1fr}
+  .grid-contact{grid-template-columns:1fr}
+  .footer-inner{flex-direction:column;gap:20px}
+}
+
+/* PAGE VISIBILITY */
+.page{display:none}
+.page.active{display:block}
+</style>
 </head>
-<body>
+<body data-theme="midnight">
 
-<!-- ========== NAVIGATION ========== -->
-<nav>
-    <div class="nav-inner">
-        <a href="#" class="logo">slamdit</a>
-        <ul class="nav-links">
-            <li><a href="#story">My Story</a></li>
-            <li><a href="#services">What I Do</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#stack">Tech Stack</a></li>
-            <li><a href="#connect" class="nav-cta">Let's Connect</a></li>
-        </ul>
-        <button class="mobile-menu-btn" onclick="document.querySelector('.nav-links').classList.toggle('show')" aria-label="Menu">&#9776;</button>
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" onclick="showPage('home')">slamdit</a>
+    <div class="nav-links" id="main-nav-links">
+      <a href="#mission">Mission</a>
+      <a href="#products">Products</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
     </div>
+    <div class="nav-right">
+      <div class="theme-dots">
+        <button class="theme-dot active" style="background:#f06f3a" onclick="setTheme('midnight')" aria-label="Midnight theme"></button>
+        <button class="theme-dot" style="background:#e84690" onclick="setTheme('synth-dusk')" aria-label="Synth Dusk theme"></button>
+        <button class="theme-dot" style="background:#c33c22" onclick="setTheme('prairie-dawn')" aria-label="Prairie Dawn theme"></button>
+      </div>
+      <span class="nav-est">Independent &middot; Est. 2024</span>
+    </div>
+  </div>
 </nav>
 
-<!-- ========== HERO ========== -->
-<section class="hero">
-    <div class="hero-inner">
-        <div class="hero-text">
-            <h1>Hey there! <span class="wave">&#128075;</span><br>I'm Sally Lamoureux.</h1>
-            <p class="hero-tagline">
-                Founder of <em>slamdit</em> — building tools that help real people<br>
-                work smarter, dream bigger, and maybe even <em>escape the grind</em>.
-            </p>
-            <p class="hero-bio">
-                I'm a 50-year-old builder, problem solver, and unapologetic optimist who traded a 20-year corporate career for freedom, faith, and the joy of creating things that actually matter. If you're thinking about making your own leap — I'm proof it's possible, and I'd love to help.
-            </p>
-            <div class="hero-btns">
-                <a href="#projects" class="btn btn-primary">See What I'm Building &#8594;</a>
-                <a href="#story" class="btn btn-outline">Read My Story</a>
-            </div>
-        </div>
-        <div class="hero-photo">
-            <div class="photo-frame">
-                <img src="sally-photo.jpg" alt="Sally Lamoureux — founder of slamdit">
-                <div class="photo-badge">Est. 2024 &#127793;</div>
-            </div>
-        </div>
-    </div>
+<!-- ============ HOME PAGE ============ -->
+<div id="page-home" class="page active">
+
+<!-- BROADCAST STRIP -->
+<div class="broadcast">
+  <span>CH. 01 / INDEX</span>
+  <span><span class="rec-dot"></span> REC</span>
+  <span id="utc-clock">00:00:00 UTC</span>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="mission">
+  <h1 class="wordmark">slamdit</h1>
+  <h2 class="hero-headline">
+    Technology that gives people their <span class="emphasis">time</span> back.
+  </h2>
+  <div class="hero-sub">
+    <p>We build and sell apps that help people make money, build community, strengthen relationships, and create technology that speaks to the heart &mdash; useful software for small businesses, side-hustlers, and neighbors who want a little more out of the day.</p>
+    <p>Independent, founder-led, and built on hope, faith, and a stubborn kind of joy. A company that started where a lot of good things start: on the far side of a corporate layoff.</p>
+  </div>
 </section>
 
-<!-- ========== MY STORY ========== -->
-<section id="story" class="alt-bg">
-    <div class="section-inner">
-        <p class="section-label">My Story</p>
-        <h2 class="section-title">From Corporate Cubicle to Freedom</h2>
-        <p class="section-subtitle">No victim mentality here — just gratitude, grit, and a whole lot of joy.</p>
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-track">
+    <span class="ticker-item"><span class="ticker-sep">/</span> Make money</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> FlipQuik</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> Build community</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> contract-it-all</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> Gather</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> Strengthen relationships</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> Roommate</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> Speak to the heart</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> KindAwake</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> RepCheckMatch</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> Make money</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> FlipQuik</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> Build community</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> contract-it-all</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> Gather</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> Strengthen relationships</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> Roommate</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> Speak to the heart</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> KindAwake</span>
+    <span class="ticker-item"><span class="ticker-sep">/</span> RepCheckMatch</span>
+  </div>
+</div>
 
-        <div class="story-content">
-            <div class="story-text">
-                <p>
-                    After 20 years in corporate, my position was eliminated. And you know what? It was the best thing that ever happened to me. I mean that. No bitterness, no looking back — just pure, overwhelming gratitude for this incredible second chance at actually <em>living</em>.
-                </p>
-                <div class="highlight">
-                    My current situation is a GIFT, and I thank God every single day for it. I have more energy now than I've ever had and an inner peace I didn't know could exist.
-                </div>
-                <p>
-                    Here's the thing nobody tells you about leaving corporate: all those years of solving business bottlenecks, automating clunky processes, and wrangling SharePoint into doing things it probably shouldn't have been doing? That wasn't wasted time. It was <em>training</em>. It positioned me to build real solutions using AI — and now I get to do it on my own terms.
-                </p>
-                <p>
-                    I'd honestly rather be outside in nature than in front of my computer (and if you know me, you know that's saying something, because I <em>really</em> love building things). But that's the whole point — life isn't meant to be spent sitting behind a desk all day. There's a whole world out there. I want to help you find your way to it.
-                </p>
-                <p>
-                    Faith and family are my number one motivators. My spiritual wellbeing has transformed since this journey started, and I've discovered an inner knowing that life has so much more to offer when you stop living on someone else's schedule.
-                </p>
-                <p>
-                    I'm here to share what I've learned, build things that help people, and spread a little encouragement along the way. Whether you chose to leave corporate or got pushed — welcome. You're in the right place. And yes, I'm also hilarious and incredibly humble. (You'll just have to take my word for it. &#128514;)
-                </p>
-            </div>
-
-            <div class="story-values">
-                <h3>What Drives Me</h3>
-                <div class="value-item">
-                    <div class="value-icon">&#128591;</div>
-                    <div>
-                        <h4>Faith & Family First</h4>
-                        <p>Everything I build starts from a place of gratitude and purpose. My faith grounds me, my family fuels me.</p>
-                    </div>
-                </div>
-                <div class="value-item">
-                    <div class="value-icon">&#127793;</div>
-                    <div>
-                        <h4>Nature Over Notifications</h4>
-                        <p>I believe in building a life that lets you step away from the screen and into the sunshine. Tech should free us, not chain us.</p>
-                    </div>
-                </div>
-                <div class="value-item">
-                    <div class="value-icon">&#128170;</div>
-                    <div>
-                        <h4>Joy as a Superpower</h4>
-                        <p>No doom-and-gloom energy here. I lead with joy, build with passion, and believe encouragement changes everything.</p>
-                    </div>
-                </div>
-                <div class="value-item">
-                    <div class="value-icon">&#129309;</div>
-                    <div>
-                        <h4>Lifting Others Up</h4>
-                        <p>Especially women and anyone who's been told "that's not realistic." I'm living proof that it is. Let's go!</p>
-                    </div>
-                </div>
-                <div class="value-item">
-                    <div class="value-icon">&#9968;&#65039;</div>
-                    <div>
-                        <h4>Inner Peace is Real</h4>
-                        <p>Spiritual wellbeing isn't a buzzword for me — it's the foundation. When you're aligned inside, everything you build is better.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+<!-- PILLARS -->
+<section class="section">
+  <div class="section-label">01 Pillars</div>
+  <div class="grid-border grid-4">
+    <div class="pillar-card">
+      <div class="pillar-title">Make money</div>
+      <div class="pillar-apps">FlipQuik</div>
+      <div class="pillar-desc">Tools that help resellers and side-hustlers earn smarter, not harder.</div>
     </div>
+    <div class="pillar-card">
+      <div class="pillar-title">Build community</div>
+      <div class="pillar-apps">contract-it-all, Gather</div>
+      <div class="pillar-desc">Lending between neighbors. Spontaneous local get-togethers. Trust made simple.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-title">Strengthen relationships</div>
+      <div class="pillar-apps">Roommate</div>
+      <div class="pillar-desc">Living together works better when expectations are on the table from day one.</div>
+    </div>
+    <div class="pillar-card">
+      <div class="pillar-title">Speak to the heart</div>
+      <div class="pillar-apps">KindAwake, RepCheckMatch</div>
+      <div class="pillar-desc">Spiritual community and civic alignment for people who care about what matters.</div>
+    </div>
+  </div>
 </section>
 
-<!-- ========== WHAT I DO ========== -->
-<section id="services">
-    <div class="section-inner">
-        <p class="section-label">What I Do</p>
-        <h2 class="section-title">Helping You Work Smarter, Not Harder</h2>
-        <p class="section-subtitle">I help small businesses and side-hustlers streamline their processes with AI and automation — so you can spend less time grinding and more time <em>living</em>.</p>
-
-        <div class="services-grid">
-            <div class="service-card">
-                <div class="service-icon">&#129302;</div>
-                <h3>AI-Powered Automation</h3>
-                <p>From inventory management to contract generation — if a process is eating your time, I can probably automate it. I use Claude AI, Supabase, and modern tools to build solutions that actually work for real people.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">&#128279;</div>
-                <h3>Platform Integrations</h3>
-                <p>eBay APIs, Supabase databases, Vercel deployments — I connect the dots between platforms so your business runs like a well-oiled machine. No more copy-pasting between apps.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">&#128161;</div>
-                <h3>Business Workflow Design</h3>
-                <p>20 years of solving corporate bottlenecks taught me one thing: most processes are way more complicated than they need to be. I'll help you simplify, automate, and breathe easier.</p>
-            </div>
-            <div class="service-card">
-                <div class="service-icon">&#128187;</div>
-                <h3>Full-Stack Development</h3>
-                <p>React, Tailwind, Supabase, Vercel — I build complete web applications from the ground up. Clean, modern, and built to grow with you. No cookie-cutter templates here.</p>
-            </div>
-        </div>
+<!-- OPERATING PRINCIPLES -->
+<section class="section">
+  <div class="section-label">02 Operating principles</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:0">
+    <div class="principle">
+      <div class="principle-num">01</div>
+      <div class="principle-title">Build for real people</div>
+      <div class="principle-desc">Every app starts with a problem someone actually has. We talk to users before we write code.</div>
     </div>
+    <div class="principle">
+      <div class="principle-num">02</div>
+      <div class="principle-title">Earn time, don't steal it</div>
+      <div class="principle-desc">Our software should give hours back, not demand them. If it takes longer to learn than it saves, we failed.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">03</div>
+      <div class="principle-title">Small company, long horizon</div>
+      <div class="principle-desc">No venture money, no growth-at-all-costs. We build things meant to last and charge fair prices for them.</div>
+    </div>
+    <div class="principle">
+      <div class="principle-num">04</div>
+      <div class="principle-title">AI as leverage, not spectacle</div>
+      <div class="principle-desc">We use AI to make software smarter and cheaper to build. The user shouldn't have to care how it works.</div>
+    </div>
+  </div>
 </section>
 
-<!-- ========== PROJECTS ========== -->
-<section id="projects" class="alt-bg">
-    <div class="section-inner">
-        <p class="section-label">My Projects</p>
-        <h2 class="section-title">What I'm Building Right Now</h2>
-        <p class="section-subtitle">Each of these started as a problem I wanted to solve — and turned into something that can help others, too. No pressure, just progress!</p>
+<!-- PRODUCTS -->
+<section class="section" id="products">
+  <div class="section-label">03 Products</div>
 
-        <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-header">
-                    <div class="project-emoji">&#128230;</div>
-                    <span class="project-status status-building">In Development</span>
-                </div>
-                <div class="project-body">
-                    <h3>FlipQuik</h3>
-                    <p class="project-desc">An eBay reselling platform that automates inventory, listings, and order management. Built for resellers who'd rather be sourcing than drowning in spreadsheets.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">Vite</span>
-                        <span class="tech-tag">Supabase</span>
-                        <span class="tech-tag">eBay API</span>
-                        <span class="tech-tag">Tailwind</span>
-                        <span class="tech-tag">shadcn/ui</span>
-                    </div>
-                    <a href="https://flipquik.com" class="project-link" target="_blank">Visit FlipQuik &#8594;</a>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-header">
-                    <div class="project-emoji">&#127966;&#65039;</div>
-                    <span class="project-status status-early">Early Stage</span>
-                </div>
-                <div class="project-body">
-                    <h3>Bygones Co.</h3>
-                    <p class="project-desc">A curated vintage and secondhand marketplace. Think modern e-commerce meets treasure hunting — because one person's bygone is another person's find.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">Supabase</span>
-                        <span class="tech-tag">Vercel</span>
-                        <span class="tech-tag">Tailwind</span>
-                    </div>
-                    <a href="https://bygonesco.com" class="project-link" target="_blank">Visit Bygones Co. &#8594;</a>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-header">
-                    <div class="project-emoji">&#128221;</div>
-                    <span class="project-status status-building">In Development</span>
-                </div>
-                <div class="project-body">
-                    <h3>contract-it-all.com</h3>
-                    <p class="project-desc">AI-powered contract generation for freelancers and small businesses. Because legal docs shouldn't require a law degree (or a second mortgage).</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">React</span>
-                        <span class="tech-tag">Claude AI</span>
-                        <span class="tech-tag">Supabase</span>
-                        <span class="tech-tag">Vercel</span>
-                    </div>
-                    <a href="https://contract-it-all.com" class="project-link" target="_blank">Visit contract-it-all &#8594;</a>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-header">
-                    <div class="project-emoji">&#128156;</div>
-                    <span class="project-status status-active">Live</span>
-                </div>
-                <div class="project-body">
-                    <h3>KindAwake.com</h3>
-                    <p class="project-desc">A space for spiritual wellness, mindfulness, and community encouragement. Because the inner work is what makes all the outer work possible.</p>
-                    <div class="project-tech">
-                        <span class="tech-tag">Base44</span>
-                    </div>
-                    <a href="https://kindawake.com" class="project-link" target="_blank">Visit KindAwake &#8594;</a>
-                </div>
-            </div>
-        </div>
+  <!-- FlipQuik featured -->
+  <div class="crt" style="margin-bottom:1px">
+    <div class="product-card featured">
+      <div class="product-cat">Make money</div>
+      <div class="product-name">FlipQuik</div>
+      <div class="product-tagline">Smarter reselling, before you buy.</div>
+      <div class="product-desc">A decision-support tool &mdash; size the market, predict sell-through, price with confidence. For side-hustlers and full-time resellers.</div>
+      <div class="product-bottom">
+        <span class="badge badge-dev">In development</span>
+        <a href="https://flipquik.com" target="_blank" rel="noopener" class="visit-link">Visit &rarr;</a>
+      </div>
     </div>
+  </div>
+
+  <!-- Grid of other products -->
+  <div class="grid-border grid-3">
+    <div class="product-card">
+      <div class="product-cat">Build community</div>
+      <div class="product-name">contract-it-all</div>
+      <div class="product-tagline">Borrow from a neighbor, on good terms.</div>
+      <div class="product-desc">Lending agreement app &mdash; photograph item condition, set return window, record short video agreement, virtual signature, optional card hold on non-return.</div>
+      <div class="product-bottom">
+        <span class="badge badge-dev">In development</span>
+        <a href="https://contract-it-all.com" target="_blank" rel="noopener" class="visit-link">Visit &rarr;</a>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-cat">Strengthen relationships</div>
+      <div class="product-name">Roommate</div>
+      <div class="product-tagline">Live together, on the same page.</div>
+      <div class="product-desc">Deep compatibility questionnaire, real roommate agreement, running bill-splitter, and shared rental documentation. Working title.</div>
+      <div class="product-bottom">
+        <span class="badge badge-concept">Concepting</span>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-cat">Speak to the heart</div>
+      <div class="product-name">RepCheckMatch</div>
+      <div class="product-tagline">Answer what matters to you.</div>
+      <div class="product-desc">Align with local, state, and national candidates based on the issues you actually care about.</div>
+      <div class="product-bottom">
+        <span class="badge badge-concept">Concepting</span>
+        <a href="https://repcheckmatch.com" target="_blank" rel="noopener" class="visit-link">Visit &rarr;</a>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-cat">Speak to the heart</div>
+      <div class="product-name">KindAwake</div>
+      <div class="product-tagline">A quiet place to wake up.</div>
+      <div class="product-desc">Quiet community for people in a spiritual awakening who aren't ready to post it publicly.</div>
+      <div class="product-bottom">
+        <span class="badge badge-live">Live</span>
+        <a href="https://kindawake.com" target="_blank" rel="noopener" class="visit-link">Visit &rarr;</a>
+      </div>
+    </div>
+    <div class="product-card">
+      <div class="product-cat">Build community</div>
+      <div class="product-name">Gather</div>
+      <div class="product-tagline">Get together, for real.</div>
+      <div class="product-desc">Safe, low-friction invite app for spontaneous local get-togethers &mdash; pickup soccer, walks, board-game nights. Kid-safety vetting is first-class. Working title.</div>
+      <div class="product-bottom">
+        <span class="badge badge-concept">Concepting</span>
+      </div>
+    </div>
+  </div>
 </section>
 
-<!-- ========== TECH STACK ========== -->
-<section id="stack">
-    <div class="section-inner" style="text-align: center;">
-        <p class="section-label">Tech Stack</p>
-        <h2 class="section-title">My Toolbox</h2>
-        <p class="section-subtitle" style="margin: 0 auto 2.5rem;">From SharePoint wizard to full-stack AI builder — here's what I'm working with these days. (Proof that you can absolutely teach a corporate veteran new tricks.)</p>
+<!-- ABOUT -->
+<section class="section" id="about">
+  <div class="section-label">04 About</div>
+  <div class="about-head">
+    <h2 class="about-h2">An independent software company, born on the far side of a corporate layoff.</h2>
+    <p class="about-p">slamdit is not a consultancy. We don't do bespoke client work. We build products, sell them at fair prices, and reinvest in making them better. Small team, long horizon, no venture money.</p>
+    <a href="#" class="founder-link" onclick="showPage('about-me');return false">Meet the founder &rarr;</a>
+  </div>
 
-        <div class="stack-grid">
-            <div class="stack-item">React</div>
-            <div class="stack-item">Vite</div>
-            <div class="stack-item">Tailwind CSS</div>
-            <div class="stack-item">shadcn/ui</div>
-            <div class="stack-item">Supabase</div>
-            <div class="stack-item">Vercel</div>
-            <div class="stack-item">Claude AI</div>
-            <div class="stack-item">Claude Code</div>
-            <div class="stack-item">Cowork</div>
-            <div class="stack-item">eBay API</div>
-            <div class="stack-item">Base44</div>
-            <div class="stack-item">GitHub</div>
-            <div class="stack-item">JavaScript</div>
-            <div class="stack-item">HTML / CSS</div>
-            <div class="stack-item">SharePoint (the OG)</div>
-        </div>
+  <div class="grid-border grid-4" style="grid-template-columns:repeat(3,1fr)">
+    <div class="value-card">
+      <span class="watermark">H</span>
+      <div class="value-name">Hope</div>
+      <div class="value-desc">Every product starts with the belief that things can be better. We build because we see possibility.</div>
     </div>
+    <div class="value-card">
+      <span class="watermark">F</span>
+      <div class="value-name">Faith</div>
+      <div class="value-desc">Trust the process, trust the people, trust that doing good work matters even when nobody's watching.</div>
+    </div>
+    <div class="value-card">
+      <span class="watermark">J</span>
+      <div class="value-name">Joy</div>
+      <div class="value-desc">Work should feel alive. We bring energy, humor, and warmth to everything we ship.</div>
+    </div>
+  </div>
 </section>
 
-<!-- ========== ENCOURAGEMENT CTA ========== -->
-<section class="encouragement" id="connect">
-    <div class="section-inner">
-        <h2>Thinking About Making Your Leap?</h2>
-        <p>
-            Whether you left corporate by choice or got pushed out the door — I see you. I <em>am</em> you. There's no playbook for this part, but there is community, encouragement, and the absolute certainty that your best chapters are ahead. No pressure. There's time. Let's figure it out together.
-        </p>
-        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-            <a href="mailto:contactus@slamdit.com" class="btn btn-light">Say Hello &#128075;</a>
-            <a href="https://kindawake.com" target="_blank" class="btn btn-ghost">Visit KindAwake &#127793;</a>
-        </div>
-    </div>
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-label">05 Contact</div>
+  <h2 class="contact-h2">Let's talk.</h2>
+  <div class="grid-border grid-contact">
+    <a href="mailto:contactus@slamdit.com" class="contact-cell">
+      <div class="contact-label">General</div>
+      <div class="contact-value">contactus@slamdit.com</div>
+    </a>
+    <a href="mailto:partners@slamdit.com" class="contact-cell">
+      <div class="contact-label">Partnerships</div>
+      <div class="contact-value">partners@slamdit.com</div>
+    </a>
+    <a href="https://www.linkedin.com/in/sally-lamoureux-b444405" target="_blank" rel="noopener" class="contact-cell">
+      <div class="contact-label">LinkedIn</div>
+      <div class="contact-value">Sally Lamoureux</div>
+    </a>
+  </div>
 </section>
 
-<!-- ========== FOOTER ========== -->
-<footer>
-    <div class="footer-inner">
-        <div class="footer-brand">
-            <a href="#" class="logo">slamdit</a>
-            <p>Building with joy. Sharing with purpose.</p>
-        </div>
-        <div class="footer-links">
-            <a href="mailto:contactus@slamdit.com">Email</a>
-            <a href="https://www.linkedin.com/in/sally-lamoureux-b444405" target="_blank">LinkedIn</a>
-            <a href="https://flipquik.com" target="_blank">FlipQuik</a>
-            <a href="https://bygonesco.com" target="_blank">Bygones Co.</a>
-            <a href="https://contract-it-all.com" target="_blank">contract-it-all</a>
-            <a href="https://kindawake.com" target="_blank">KindAwake</a>
-        </div>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">slamdit</div>
+      <div class="footer-tag">A small software co.</div>
     </div>
-    <div style="max-width: 1100px; margin: 2rem auto 0; padding: 1.5rem 0 0; border-top: 1px solid rgba(255,255,255,0.1); text-align: center; font-size: 0.8rem; opacity: 0.5;">
-        &copy; 2026 slamdit. Built with heart, Claude AI, and a whole lot of coffee.
+    <div class="footer-links">
+      <a href="https://flipquik.com" target="_blank" rel="noopener">FlipQuik</a>
+      <a href="https://contract-it-all.com" target="_blank" rel="noopener">contract-it-all</a>
+      <a href="https://kindawake.com" target="_blank" rel="noopener">KindAwake</a>
+      <a href="https://repcheckmatch.com" target="_blank" rel="noopener">RepCheckMatch</a>
     </div>
+    <div class="footer-links">
+      <a href="#" onclick="showPage('about-me');return false">About the founder</a>
+    </div>
+  </div>
+  <div class="footer-copy">&copy; 2026 slamdit &middot; A small software co.</div>
 </footer>
 
+</div><!-- end page-home -->
+
+<!-- ============ ABOUT ME PAGE ============ -->
+<div id="page-about-me" class="page">
+<div style="height:56px"></div>
+<article class="aboutme">
+  <div class="section-label">About the founder</div>
+  <h1 class="aboutme-h1">Sally Lamoureux</h1>
+  <p class="aboutme-sub">Builder, problem solver, unapologetic optimist.</p>
+
+  <div class="aboutme-body">
+    <p>I spent 20 years in corporate operations &mdash; the kind of work where you untangle processes, fix what's broken, and build systems that let people do their actual jobs. I was good at it. I liked the puzzle of it. And then one day the position was eliminated.</p>
+    <p>That layoff was the best thing that ever happened to me.</p>
+    <p>No victim mentality here &mdash; just gratitude, grit, and a whole lot of joy. My current situation is a gift, and I thank God every single day for it. I have more energy now than I've had in years because I'm not spending it surviving someone else's org chart.</p>
+    <p>Here's the thing nobody tells you about leaving corporate: all those years of solving business bottlenecks, designing workflows, managing cross-functional chaos &mdash; that wasn't just a career. That was <span class="emphasis">training</span>. Every problem I solved for someone else taught me how to build something of my own.</p>
+    <p>I'd rather be outside in nature than in front of my computer (and if you know me, you know that's saying something, because I <span class="emphasis">really</span> love building things). But that's the whole point &mdash; I'm building technology that gives people their time back, including me.</p>
+    <p>Faith and family are my number one motivators. My spiritual wellbeing has transformed since this journey began, and I believe that inner alignment shows up in the work. When you're building from a place of peace instead of panic, people can feel it.</p>
+    <p>I started slamdit because I believe small, useful software can change people's days &mdash; and enough changed days change a life. I'm here to share what I've learned, build things that help people, and spread a little encouragement along the way.</p>
+    <p style="color:var(--text-muted);font-size:14px;margin-top:16px">If you're thinking about making your own leap &mdash; I'm proof it's possible, and I'd love to help.</p>
+  </div>
+
+  <h2 class="drives-title">What Drives Me</h2>
+  <div>
+    <div class="drive-item"><h3>Faith &amp; Family First</h3><p>Everything I build starts from a place of gratitude and purpose. My faith grounds me, my family fuels me.</p></div>
+    <div class="drive-item"><h3>Nature Over Notifications</h3><p>Tech should free you, not chain you. I believe in building a life that lets you step away from the screen.</p></div>
+    <div class="drive-item"><h3>Joy as a Superpower</h3><p>No doom-and-gloom energy here. I lead with joy, build with passion, and believe encouragement changes more than criticism ever will.</p></div>
+    <div class="drive-item"><h3>Lifting Others Up</h3><p>Especially women and anyone who's been told "that's not realistic." I'm living proof that it is.</p></div>
+  </div>
+
+  <a href="#" class="back-link" onclick="showPage('home');return false">&larr; Back to slamdit.com</a>
+</article>
+
+<footer class="footer">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">slamdit</div>
+      <div class="footer-tag">A small software co.</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://flipquik.com" target="_blank" rel="noopener">FlipQuik</a>
+      <a href="https://contract-it-all.com" target="_blank" rel="noopener">contract-it-all</a>
+      <a href="https://kindawake.com" target="_blank" rel="noopener">KindAwake</a>
+      <a href="https://repcheckmatch.com" target="_blank" rel="noopener">RepCheckMatch</a>
+    </div>
+    <div class="footer-links">
+      <a href="#" onclick="showPage('home');return false">Home</a>
+    </div>
+  </div>
+  <div class="footer-copy">&copy; 2026 slamdit &middot; A small software co.</div>
+</footer>
+</div><!-- end page-about-me -->
+
 <script>
-    // Smooth scrolling
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-        a.addEventListener('click', e => {
-            e.preventDefault();
-            const target = document.querySelector(a.getAttribute('href'));
-            if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
-    });
+// UTC clock
+function updateClock(){
+  const d=new Date();
+  const h=String(d.getUTCHours()).padStart(2,'0');
+  const m=String(d.getUTCMinutes()).padStart(2,'0');
+  const s=String(d.getUTCSeconds()).padStart(2,'0');
+  document.getElementById('utc-clock').textContent=h+':'+m+':'+s+' UTC';
+}
+setInterval(updateClock,1000);updateClock();
 
-    // Nav background on scroll
-    window.addEventListener('scroll', () => {
-        const nav = document.querySelector('nav');
-        nav.style.boxShadow = window.scrollY > 50 ? '0 2px 20px rgba(0,0,0,0.08)' : 'none';
-    });
+// Theme
+function setTheme(t){
+  document.body.setAttribute('data-theme',t);
+  try{localStorage.setItem('slamdit-theme',t)}catch(e){}
+  document.querySelectorAll('.theme-dot').forEach(function(d){d.classList.remove('active')});
+  var idx={midnight:0,'synth-dusk':1,'prairie-dawn':2};
+  document.querySelectorAll('.theme-dot')[idx[t]].classList.add('active');
+}
+(function(){try{var t=localStorage.getItem('slamdit-theme');if(t)setTheme(t)}catch(e){}})();
 
-    // Intersection Observer for fade-in animations
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }
-        });
-    }, { threshold: 0.1 });
-
-    document.querySelectorAll('.service-card, .project-card, .value-item, .stack-item').forEach(el => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-        observer.observe(el);
-    });
+// SPA page switching
+function showPage(id){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.getElementById('page-'+id).classList.add('active');
+  window.scrollTo(0,0);
+  // Update nav links
+  var nav=document.getElementById('main-nav-links');
+  if(id==='home'){
+    nav.innerHTML='<a href="#mission">Mission</a><a href="#products">Products</a><a href="#about">About</a><a href="#contact">Contact</a>';
+  }else{
+    nav.innerHTML='<a href="#" onclick="showPage(\'home\');return false">Home</a><a href="#" onclick="showPage(\'home\');document.getElementById(\'products\').scrollIntoView();return false">Products</a><a href="#" onclick="showPage(\'home\');document.getElementById(\'contact\').scrollIntoView();return false">Contact</a>';
+  }
+}
 </script>
-
 </body>
 </html>
